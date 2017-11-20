@@ -19,8 +19,8 @@ else:
 	
 print doc
 print 'Storing document in collection %s ... ' % collection
-username = 'nyhrest'
-password = '***REMOVED***'
+username = '***removed***'
+password = '***removed***'
 
 auth = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
 
