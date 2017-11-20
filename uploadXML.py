@@ -23,8 +23,8 @@ def putFile(file):
 		
 	print doc
 	print 'Storing document in collection %s ... ' % collection
-	username = 'nyhrest'
-	password = 'anywherebuthere'
+	username = 'mmmhmm' #not actual creds
+	password = 'yeah right' # Not actual creds
 
 	auth = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
 
