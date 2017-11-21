@@ -221,6 +221,7 @@ def process_collections(nyh_collections):
 					collAlias = xc.text
 				
 				collectionURL = 'http://cdm16694.contentdm.oclc.org/cdm/search/collection/' + collAlias + '/searchterm/' + collTitle + '/field/relatig/mode/exact/conn/and/order/date'
+
 				ET.SubElement(collection, 'CollectionURL').text = collectionURL
 			
 			creator = get_field_from_array(sorted(nyh_collections[coll_id]['creator'], key=lambda x:[1], reverse=True), list_length)
