@@ -19,8 +19,13 @@ else:
 	
 print doc
 print 'Storing document in collection %s ... ' % collection
+<<<<<<< HEAD
 username = 'nyhrest'
 password = 'anywherebuthere'
+=======
+username = '***removed***'
+password = '***removed***'
+>>>>>>> 5daabcd64c0a97906bf7570d09b25df3e038f38c
 
 auth = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
 

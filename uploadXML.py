@@ -8,6 +8,7 @@ import os
 from string import rfind
 import nyhconfig
 
+
 def putFile(file):
 	collection = '/exist/rest/db/apps/nyheritage/data'
 	f = open(file, 'r')
@@ -47,3 +48,4 @@ for filename in os.listdir('./output'):
 	if filename.endswith('.xml'):
 		#print os.path.join('./output/', filename)
 		putFile('./output/' + filename)
+
