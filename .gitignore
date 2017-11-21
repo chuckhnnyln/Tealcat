@@ -2,4 +2,6 @@
 backup
 full
 scripts
+output
 output.xml
+nyhconfig.*

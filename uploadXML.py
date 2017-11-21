@@ -6,7 +6,7 @@ import base64
 import sys
 import os
 from string import rfind
-
+import nyhconfig
 
 def putFile(file):
 	collection = '/exist/rest/db/apps/nyheritage/data'
@@ -23,10 +23,8 @@ def putFile(file):
 		
 	print doc
 	print 'Storing document in collection %s ... ' % collection
-	username = 'mmmhmm' #not actual creds
-	password = 'yeah right' # Not actual creds
 
-	auth = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+	auth = base64.encodestring('%s:%s' % (nyhconfig.existAuth()['user'], nyhconfig.existAuth()['password'])).replace('\n', '')
 
 	con = httplib.HTTP('54.174.162.83:8080')
 
@@ -48,4 +46,4 @@ def putFile(file):
 for filename in os.listdir('./output'):
 	if filename.endswith('.xml'):
 		#print os.path.join('./output/', filename)
-		putFile('./output/', filename)
+		putFile('./output/' + filename)
