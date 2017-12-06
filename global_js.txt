@@ -1,0 +1,64 @@
+(function () {
+    // This script pulls a URL for the URL item
+    // and it presents the URL in an iFrame, allowing the video or audio to play
+    function unsupported() {
+        // grabs the URL associated with the image or audio file
+        // will only grab a URL if an URL item type exists
+        var link = document.querySelector('[class*="itemUrlLink"]>a');
+        var wrapper = document.createElement('div');
+        // if URL exists, create an iFrame and replace on page
+        if (link && link.href) {
+            wrapper.innerHTML = '<iframe width="100%" scrolling="auto" height="550px" frameborder="0" src="' + link.href + '"></iframe>';
+        }
+        // find the parent container where we want to add the iframe
+        var container = document.querySelector('[class*="itemUrl"]');
+        if (container && container.parentElement) {
+            container.parentElement.insertBefore(wrapper, container);
+        }
+        // function for disposing of the iframe
+        return function () {
+            wrapper.parentElement && wrapper.parentElement.removeChild(wrapper);
+        };
+    }
+
+    var dispose;
+    // calls when a user enters to the item page
+    document.addEventListener('cdm-item-page:ready', function () {
+        dispose = unsupported();
+    });
+    // calls when a user navigates to the next item page
+    document.addEventListener('cdm-item-page:update', function () {
+        dispose && dispose();
+        dispose = unsupported();
+    });
+    // calls when a user leaves the item page
+    document.addEventListener('cdm-item-page:leave', function () {
+        dispose && dispose();
+    });
+
+})();
+
+// The following block of code is to redirect a CONTENTdm LandingPage for a given alias
+	var redirects = {
+		//'CONTENTdm_Alias' : 'Where to redirect'
+		'myAlias1': 'https://www.google.com/',
+		'myAlias2': 'https://www.oclc.org/'
+		
+	};
+
+	document.addEventListener('cdm-collection-landing-page:enter', function (event) {
+		if (redirects[event.detail.collectionId]) {
+			window.location = redirects[event.detail.collectionId];
+		}
+	});
+
+// The following code will redirect the CONTENTdm home page to a selected page
+
+document.addEventListener('cdm-home-page:enter', function () {
+			window.location = "https://www.google.com/";
+	});
+
+document.addEventListener('cdm-home-page:click', function () {
+			window.location = "https://www.google.com/";
+	});
+		
