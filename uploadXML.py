@@ -18,7 +18,7 @@ def putFile(file):
 
 	p = rfind(file, '/')
 	if p > -1:
-		doc = file[p+1]
+		doc = file[p+1:]
 	else:
 		doc = file
 		
