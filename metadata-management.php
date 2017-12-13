@@ -110,7 +110,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       echo "PublisherOfDigital: <textarea cols='35' rows='10' name='PublisherOfDigital'></textarea>";
       echo "LocationOfOriginals: <textarea name='LocationOfOriginals' cols='35' rows='10'></textarea>";
       echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'></textarea>";
-      echo "FindingAidURL: <input type='text' size='35' maxlength='100' name='FindingAidURL'>";
+      echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL'>";
       echo "CollectionType: <input type='text' size='35' maxlength='35' name='CollectionType'>";
       #echo "SampleImageURL: <input type='text' size='35' maxlength='35' name='SampleImageURL'>";
       echo "YearbookTitle: <input type='text' size='35' maxlength='100' name='YearbookTitle'>";
@@ -261,7 +261,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     echo "PublisherOfDigital: <textarea name='PublisherOfDigital' size='35' maxlength='35'>$PublisherOfDigital</textarea>";
     echo "LocationOfOriginals: <textarea name='LocationOfOriginals' size='35' maxlength='35'>$LocationOfOriginals</textarea>";
     echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'>$ScopeAndContentSource</textarea>";
-    echo "FindingAidURL: <input type='text' size='35' maxlength='35' name='FindingAidURL' value='$FindingAidURL'>";
+    echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL' value='$FindingAidURL'>";
     echo "CollectionType: <input type='text' size='35' maxlength='35' name='CollectionType' value='$CollectionType'>";
     #echo "SampleImageURL: <input type='text' size='35' maxlength='35' name='SampleImageURL' value='$SampleImageURL'>";
     echo "YearbookTitle: <input type='text' size='35' maxlength='100' name='YearbookTitle' value='$YearbookTitle'>";
