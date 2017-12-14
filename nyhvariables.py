@@ -46,7 +46,7 @@ def topics():
 def exist_paths():
 	return {
 		'collection_list' 	: 'http://54.174.162.83:8080/exist/apps/nyheritage/views/collection_list.xq'
-		'collection_url'	: 'http://54.174.162.83:8080/exist/rest/db/apps/nyheritage/data/coll_%s.xml'
+		, 'collection_url'	: 'http://54.174.162.83:8080/exist/rest/db/apps/nyheritage/data/coll_%s.xml'
 	}
 
 def local_paths():
