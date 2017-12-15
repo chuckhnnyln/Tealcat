@@ -9,15 +9,6 @@ python ./oaiharvest.py
 echo Finished OAI harvest
 
 echo Processing XML for collections
-# Remove existing local xml files
-cd output
-rm *.xml
-cd ..
-python ./parseOAItoXML.py
-echo Finished processing XML
-
-echo Uploading processed files to eXistDB
-python ./uploadXML.py
-echo Finished uploading
+./process_oai.sh
 
 echo Ending job
