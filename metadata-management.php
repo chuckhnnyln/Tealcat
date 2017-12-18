@@ -130,7 +130,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       echo "Department: <input type='text' size='35' maxlength='50' name='Department'>";
       echo "ContactPerson: <input type='text' size='255' maxlength='255' name='ContactPerson'>";
       echo "ContactPhone: <input type='text' size='35' maxlength='35' name='ContactPhone'>";
-      echo "ContactEmail: <input type='text' size='35' maxlength='35' name='ContactEmail'>";
+      echo "ContactEmail: <input type='text' size='35' maxlength='255' name='ContactEmail'>";
       echo "Address1: <input type='text' size='35' maxlength='50' name='Address1'>";
       echo "Address2: <input type='text' size='35' maxlength='50' name='Address2'>";
       echo "City: <input type='text' size='35' maxlength='35' name='City'>";
@@ -258,7 +258,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #echo "Location: <input type='text' size='35' maxlength='35' name='Location' value='$Location'>";
     echo "BiogHistory: <textarea name='BiogHistory' cols='35' rows='10'>$BiogHistory</textarea>";
     echo "ScopeAndContent:<font color='red'>*</font> <textarea size='35' name='ScopeAndContent' cols='35' rows='10' required>$ScopeAndContent</textarea>";
-    echo "PublisherOfDigital: <textarea name='PublisherOfDigital' size='35' maxlength='35'>$PublisherOfDigital</textarea>";
+    echo "PublisherOfDigital: <textarea name='PublisherOfDigital' cols='35' rows='10'>$PublisherOfDigital</textarea>";
     echo "LocationOfOriginals: <textarea name='LocationOfOriginals' size='35' maxlength='35'>$LocationOfOriginals</textarea>";
     echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'>$ScopeAndContentSource</textarea>";
     echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL' value='$FindingAidURL'>";
@@ -315,7 +315,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     echo "Department: <input type='text' size='35' maxlength='50' name='Department' value='$Department'>";
     echo "ContactPerson: <input type='text' size='255' maxlength='255' name='ContactPerson' value='$ContactPerson'>";
     echo "ContactPhone: <input type='text' size='35' maxlength='35' name='ContactPhone' value='$ContactPhone'>";
-    echo "ContactEmail: <input type='text' size='35' maxlength='35' name='ContactEmail' value='$ContactEmail'>";
+    echo "ContactEmail: <input type='text' size='35' maxlength='255' name='ContactEmail' value='$ContactEmail'>";
     echo "Address1: <input type='text' size='35' maxlength='50' name='Address1' value='$Address1'>";
     echo "Address2: <input type='text' size='35' maxlength='50' name='Address2' value='$Address2'>";
     echo "City: <input type='text' size='35' maxlength='35' name='City' value='$City'>";
@@ -613,6 +613,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     ### Adding new collection!
     #Get the data from the form
     $CollectionID = $_REQUEST['CollectionID'];
+    $CollectionID = strtoupper($CollectionID);
     $Title = $_REQUEST['Title'];
     $CollectionAlias = $_REQUEST['CollectionAlias'];
     $InstitutionID = $_REQUEST['InstitutionID'];
@@ -712,7 +713,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $output = curl_exec($ch);
     curl_close($ch);
     #echo "<textarea>" . $xml_data . "</textarea><br><br>";
-    echo "Updated " . $CollectionAlias . " : <b>" . $Title . "</b><br><br>";
+    echo "Updated " . $CollectionID . " : <b>" . $Title . "</b><br><br>";
     echo "Changes to the metadata <b>will not</b> appear immediately for the public. Metadata changes will update within 15 minutes.<br><br>";
     ### End adding new collection
   } elseif ( $task == "addnew-inst" ) {
