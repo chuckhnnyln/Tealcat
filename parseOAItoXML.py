@@ -5,41 +5,23 @@ from collections import defaultdict
 import sys
 import urllib2
 import datetime
+import nyhvariables
 
-nyh_topics = [
-	'Agriculture'
-	, 'Architecture'
-	, 'Arts & Entertainment'
-	, 'Business & Industry'
-	, 'Community & Events'
-	, 'Daily Life'
-	, 'Education'
-	, 'Environment & Nature'
-	, 'Ethnic Groups'
-	, 'Geography & Maps'
-	, 'Government, Law & Politics'
-	, 'Medicine, Science & Technology'
-	, 'Military & War"'
-	, 'People'
-	, 'Philosophy & Religion'
-	, 'Recreation & Sports'
-	, 'Transportation'
-	, 'Work & Labor'
-]
+nyh_topics = nyhvariables.topics()
 
-oai_pre = '{http://www.openarchives.org/OAI/2.0/}'
-dc_pre = '{http://purl.org/dc/elements/1.1/}'
+oai_pre = nyhvariables.namespaces()['oai_pre']
+dc_pre = nyhvariables.namespaces()['dc_pre'] 
 
-list_records = '{http://www.openarchives.org/OAI/2.0/}ListRecords'
-record = '{http://www.openarchives.org/OAI/2.0/}record'
-header = '{http://www.openarchives.org/OAI/2.0/}header'
-metadata = '{http://www.openarchives.org/OAI/2.0/}metadata'
-dc = '{http://www.openarchives.org/OAI/2.0/oai_dc/}dc'
-identifier = '{http://purl.org/dc/elements/1.1/}identifier'
-subject = '{http://purl.org/dc/elements/1.1/}subject'
-creator = '{http://purl.org/dc/elements/1.1/}creator'
-location = '{http://purl.org/dc/elements/1.1/}location'
-hidden_date = '{http://purl.org/dc/elements/1.1/}date'
+list_records = nyhvariables.namespaces()['list_records']
+record = nyhvariables.namespaces()['record']
+header = nyhvariables.namespaces()['header']
+metadata = nyhvariables.namespaces()['metadata']
+dc = nyhvariables.namespaces()['dc']
+identifier = nyhvariables.namespaces()['identifier']
+subject = nyhvariables.namespaces()['subject']
+creator = nyhvariables.namespaces()['creator']
+location = nyhvariables.namespaces()['location']
+hidden_date = nyhvariables.namespaces()['hidden_date']
 
 list_length = 5
 
@@ -56,6 +38,7 @@ def add_to_list(array, value):
         array[-1].append(1)
 
 def showChildren(r):
+	# This function is only used for debugging and isn't called normally
 	#print '**********', r.tag, 'Start **********'
 	for child in r:
 		if child.tag == '{http://purl.org/dc/elements/1.1/}identifier' and child.text == 'XNC002':
@@ -65,7 +48,7 @@ def showChildren(r):
 
 def get_collections_list():
 	collection_list = []
-	coll_xml = urllib2.urlopen('http://54.174.162.83:8080/exist/apps/nyheritage/views/collection_list.xq')
+	coll_xml = urllib2.urlopen(nyhvariables.exist_paths()['collection_list'])
 	e = ET.parse(coll_xml).getroot()
 	for child in e.findall('Collection'):
 		collection_list.append(child.get('CollectionID'))
@@ -73,7 +56,7 @@ def get_collections_list():
 	return collection_list
 
 def get_metadata(collection_list):
-	e = ET.parse('output.xml').getroot()
+	e = ET.parse(nyhvariables.local_paths()['oai_output']).getroot()
 	nyh_metadata = defaultdict(dict)
 	for listing in e.findall(list_records):
 		for rec in listing.findall(record):
@@ -83,9 +66,10 @@ def get_metadata(collection_list):
 					for dc_elements in meta.findall(dc):
 						id = dc_elements.findall(identifier)
 						for i in id:
-							coll = i.text.replace(";", "").upper()
+							coll = i.text.replace(";", "").rstrip().upper()
 							if coll in collection_list:
 								if coll not in nyh_metadata:
+									#print("New collection found: \t%s" % coll)
 									nyh_metadata[coll]['extent'] = 1
 									nyh_metadata[coll]['creator'] = []
 									nyh_metadata[coll]['subject'] = []
@@ -190,12 +174,13 @@ def update_sheet(gc, sheet_key, nyh_metadata, council):
 			break
 
 def getXML(element_id):
-	url = 'http://54.174.162.83:8080/exist/rest/db/apps/nyheritage/data/coll_%s.xml' % element_id
+	url = nyhvariables.exist_paths()['collection_url'] % element_id
 	file = urllib2.urlopen(url)
 	return ET.parse(file)
 
 def process_collections(nyh_collections):
 	for coll_id in nyh_collections:
+		#print("Processing collection \t%s" % coll_id)
 		try:
 			xml = getXML(coll_id)
 			collection = xml.getroot()
@@ -220,7 +205,7 @@ def process_collections(nyh_collections):
 				for xc in xmlCollAlias:
 					collAlias = xc.text
 				
-				collectionURL = 'http://cdm16694.contentdm.oclc.org/cdm/search/collection/' + collAlias + '/searchterm/' + collTitle + '/field/relatig/mode/exact/conn/and/order/date'
+				collectionURL = nyhvariables.collection_url(collAlias, collTitle)
 
 				ET.SubElement(collection, 'CollectionURL').text = collectionURL
 			
@@ -253,9 +238,8 @@ def process_collections(nyh_collections):
 			tp_list = timePeriods.split(';')
 			for tp in tp_list:
 				ET.SubElement(collection, 'TimePeriod').text = tp.strip()
-			
-			ET.dump(xml)
-			xml.write('./output/coll_%s.xml' % coll_id)
+            
+			xml.write(nyhvariables.local_paths()['processed'] % coll_id)
 		except:
 			print("Unexpected error:", sys.exc_info())
 	

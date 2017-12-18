@@ -7,6 +7,9 @@ import xml.dom.pulldom
 import xml.dom.minidom
 import operator
 import codecs
+import socket
+import datetime
+import nyhvariables
 from argparse import ArgumentParser
 
 nDataBytes, nRawBytes, nRecoveries, maxRecoveries = 0, 0, 0, 3
@@ -18,12 +21,13 @@ def getFile(link, command, verbose=1, sleepTime=0):
         time.sleep(sleepTime)
     remoteAddr = link + '?verb=%s' % command
     if verbose:
-        print("\r", "getFile ...'%s'" % remoteAddr[-90:])
+        print("\r", "getFile ...'%s'" % remoteAddr) #[-90:])
     headers = {'User-Agent': 'OAIHarvester/2.0', 'Accept': 'text/html',
                'Accept-Encoding': 'compress, deflate'}
     try:
         remoteData = urllib2.urlopen(remoteAddr).read()
     except urllib2.HTTPError, exValue:
+        print("Error in read() " + exValue)
         if exValue.code == 503:
             retryWait = int(exValue.hdrs.get("Retry-After", "-1"))
             if retryWait < 0:
@@ -48,11 +52,13 @@ def getFile(link, command, verbose=1, sleepTime=0):
         return remoteData
 
 if __name__ == "__main__":
+    
+    startTime = datetime.datetime.now()
 
     parser = ArgumentParser()
 
     parser.add_argument("-l", "--link", dest="link", help="URL of repository", default="http://cdm16694.contentdm.oclc.org/oai/oai.php")
-    parser.add_argument("-o", "--filename", dest="filename", help="write repository to file", default="output.xml")
+    parser.add_argument("-o", "--filename", dest="filename", help="write repository to file", default=nyhvariables.local_paths()['oai_output'])
     parser.add_argument("-f", "--from", dest="fromDate", help="harvest records from this date yyyy-mm-dd")
     parser.add_argument("-u", "--until", dest="until", help="harvest records until this date yyyy-mm-dd")
     parser.add_argument("-m", "--mdprefix", dest="mdprefix", default="oai_dc", help="use the specified metadata format")
@@ -95,6 +101,7 @@ if __name__ == "__main__":
     recordCount = 0
 
     while dataClean:
+        newData = 0  # Set to true when we have a good pull from ContentDM. To resolove socket reset probz
         events = xml.dom.pulldom.parseString(dataClean)
         try:
             for (event, node) in events:
@@ -109,7 +116,13 @@ if __name__ == "__main__":
             quit()
         if not more:
             break
-        data = getFile(args.link, "ListRecords&resumptionToken=%s" % more.group(1))
+        while newData == 0:
+            try:
+                data = getFile(args.link, "ListRecords&resumptionToken=%s" % more.group(1))
+                newData = 1
+            except socket.error, e:
+                print(e)
+            
         dataClean = re.sub(RE_XML_ILLEGAL, "?", data)
 
     ofile.write('\n</ListRecords></OAI-PMH>\n'), ofile.close()
@@ -117,3 +130,8 @@ if __name__ == "__main__":
     print("\nRead %d bytes (%.2f compression)" % (nDataBytes, float(nDataBytes) / nRawBytes))
 
     print("Wrote out %d records" % recordCount)
+    endTime = datetime.datetime.now()
+    
+    print("Start Time: \t%s" % startTime)
+    print("End Time: \t%s" % endTime)
+    print("Total Time Elapsed (minutes) \t%s" % (endTime - startTime))

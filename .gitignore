@@ -5,4 +5,4 @@ scripts
 output
 output.xml
 nyhconfig.*
-
+*.pyc
