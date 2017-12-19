@@ -172,13 +172,13 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Title = $Collections->getElementsByTagName( "Title" )->item(0)->nodeValue;
     $CollectionAlias = $Collections->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue;
     $InstitutionID = $Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue;
-    $CollectionURL = $Collections->getElementsByTagName( "CollectionURL" )->item(0)->nodeValue;
+    #$CollectionURL = $Collections->getElementsByTagName( "CollectionURL" )->item(0)->nodeValue;
     $AbstractSearch = $Collections->getElementsByTagName( "Abstract" )->item(0);
     $Abstract = $AbstractSearch->getElementsByTagName( "div" )->item(0)->nodeValue;
-    $Extent = $Collections->getElementsByTagName( "Extent" )->item(0)->nodeValue;
+    #$Extent = $Collections->getElementsByTagName( "Extent" )->item(0)->nodeValue;
     $DatesOfOriginal = $Collections->getElementsByTagName( "DatesOfOriginal" )->item(0)->nodeValue;
-    $TimePeriod = $Collections->getElementsByTagName( "TimePeriod" )->item(0)->nodeValue;
-    $CreatorAttribution = $Collections->getElementsByTagName( "CreatorAttribution" )->item(0)->nodeValue;
+    #$TimePeriod = $Collections->getElementsByTagName( "TimePeriod" )->item(0)->nodeValue;
+    #$CreatorAttribution = $Collections->getElementsByTagName( "CreatorAttribution" )->item(0)->nodeValue;
     $NYHtopiccount = $Collections->getElementsByTagName( "NYHTopic" );
     $NYHTopic = array();
     for ($i = 0; $i < $NYHtopiccount->length; $i++) {
@@ -189,7 +189,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     for ($i = 0; $i < $subjectcount->length; $i++) {
       $Subject[$i] = $Collections->getElementsByTagName( "Subject" )->item($i)->nodeValue;
     }
-    $Location = $Collections->getElementsByTagName( "Location" )->item(0)->nodeValue;
+    #$Location = $Collections->getElementsByTagName( "Location" )->item(0)->nodeValue;
     $BiogHistorySearch = $Collections->getElementsByTagName( "BiogHistory" )->item(0);
     $BiogHistory = $BiogHistorySearch->getElementsByTagName( "div" )->item(0)->nodeValue;
     $ScopeAndContentSearch = $Collections->getElementsByTagName( "ScopeAndContent" )->item(0);
@@ -450,6 +450,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $ScopeAndContentSourceSearch->getElementsByTagName( "div" )->item(0)->nodeValue = "$ScopeAndContentSource";
     $LocationOfOriginals = htmlspecialchars($LocationOfOriginals);
     $Collections->getElementsByTagName( "LocationOfOriginals" )->item(0)->nodeValue = "$LocationOfOriginals";
+    $FindingAidURL = htmlspecialchars($FindingAidURL,ENT_XML1);
     $Collections->getElementsByTagName( "FindingAidURL" )->item(0)->nodeValue = "$FindingAidURL";
     $Collections->getElementsByTagName( "CollectionType" )->item(0)->nodeValue = "$CollectionType";
     #$Collections->getElementsByTagName( "SampleImageURL" )->item(0)->nodeValue = "$SampleImageURL";
