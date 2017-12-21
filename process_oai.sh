@@ -5,14 +5,12 @@ echo Starting process_oai
 
 echo Processing XML for collections
 # Remove existing local xml files
-cd output
-rm *.xml
-cd ..
-python ./parseOAItoXML.py
+rm /home/ubuntu/output/*.xml
+python /home/ubuntu/parseOAItoXML.py
 echo Finished processing XML
 
 echo Uploading processed files to eXistDB
-python ./uploadXML.py
+python /home/ubuntu/output/uploadXML.py
 echo Finished uploading
 
 echo Ending process_oai
