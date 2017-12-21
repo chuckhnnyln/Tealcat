@@ -9,13 +9,15 @@ $NYHTopicList = array("","Agriculture","Architecture","Arts & Entertainment","Bu
 $NYCounties = array("","Albany","Allegany","Bronx","Broome","Cattaraugus","Cayuga","Chautauqua","Chemung","Chenango","Clinton","Columbia","Cortland","Delaware","Dutchess","Erie","Essex","Franklin","Fulton","Genesee","Greene","Hamilton","Herkimer","Hidalgo","Jefferson","Kings","Lewis","Livingston","Madison","Monroe","Montgomery","Nassau","New York","Niagara","Oneida","Onondaga","Ontario","Orange","Orleans","Oswego","Otsego","Putnam","Queens","Rensselaer","Richmond","Rockland","St. Lawrence","Saratoga","Schenectady","Schoharie","Schuyler","Seneca","Steuben","Suffolk","Sullivan","Tioga","Tompkins","Ulster","Warren","Washington","Wayne","Westchester","Wyoming","Yates");
 $CouncilList = array("","CDLC","CLRC","LILRC","NNYLN","RRLC","SCRLC","WNYLRC","METRO","SENYLRC");
 
-#Contact information for Exist
+#Configuration settings
 $protocol = 'http';
 $serverurl = '127.0.0.1:8080';
 $serverfolder = 'exist/rest/db/apps/nyheritage/data';
 $username = 'nyhrest';
 $password = '***REMOVED***';
 $XSDloc = 'http://54.174.162.83:8080/exist/apps/nyheritage/NYHeritage.xsd';
+#$OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
+$OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
 
 #Functions
 function NYHTopicDropdown ($prettyi, $i, $NYHTopicList, $Selected) {
@@ -716,6 +718,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #echo "<textarea>" . $xml_data . "</textarea><br><br>";
     echo "Updated " . $CollectionID . " : <b>" . $Title . "</b><br><br>";
     echo "Changes to the metadata <b>will not</b> appear immediately for the public. Metadata changes will update within 15 minutes.<br><br>";
+    exec($OAIProcessCMD);
     ### End adding new collection
   } elseif ( $task == "addnew-inst" ) {
     $InstitutionID = $_REQUEST['InstitutionID'];
