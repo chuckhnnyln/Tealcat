@@ -194,21 +194,24 @@ def process_collections(nyh_collections):
 			ET.SubElement(collection, 'Extent').text = extent
 			
 			xmlCollectionURL = collection.findall('CollectionURL')
-			if(len(xmlCollectionURL) < 1):
-				collTitle = ''
-				collAlias = ''
-				# Get the title from the XML file
-				xmlTitle = collection.findall('Title')
-				for xt in xmlTitle:
-					collTitle = xt.text.replace(' ', '%20')
-				xmlCollAlias = collection.findall('CollectionAlias')
-				for xc in xmlCollAlias:
-					collAlias = xc.text
+			for u in xmlCollectionURL:
+				collection.remove(u)
 				
-				collectionURL = nyhvariables.collection_url(collAlias, collTitle)
+			#if(len(xmlCollectionURL) < 1):
+			collTitle = ''
+			collAlias = ''
+			# Get the title from the XML file
+			xmlTitle = collection.findall('Title')
+			for xt in xmlTitle:
+				collTitle = xt.text.replace(' ', '%20')
+			xmlCollAlias = collection.findall('CollectionAlias')
+			for xc in xmlCollAlias:
+				collAlias = xc.text
 
-				ET.SubElement(collection, 'CollectionURL').text = collectionURL
-			
+			collectionURL = nyhvariables.collection_url(collAlias, collTitle)
+
+			ET.SubElement(collection, 'CollectionURL').text = collectionURL
+
 			creator = get_field_from_array(sorted(nyh_collections[coll_id]['creator'], key=lambda x:[1], reverse=True), list_length)
 			xmlCreator = collection.findall('CreatorAttribution')
 			for c in xmlCreator:
