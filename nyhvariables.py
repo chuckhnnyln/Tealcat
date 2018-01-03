@@ -18,7 +18,7 @@ def namespaces():
 		, 'subject' 		: '{http://purl.org/dc/elements/1.1/}subject'
 		, 'creator' 		: '{http://purl.org/dc/elements/1.1/}creator'
 		, 'location' 		: '{http://purl.org/dc/elements/1.1/}location'
-		, 'hidden_date'		: '{http://purl.org/dc/elements/1.1/}date'		
+		, 'hidden_date'		: '{http://purl.org/dc/elements/1.1/}date'
 	}
 
 def topics():
@@ -51,6 +51,6 @@ def exist_paths():
 
 def local_paths():
 	return {
-		'oai_output'	: 'output.xml'
-		, 'processed'	: './output/coll_%s.xml'
+		'oai_output'	: '/home/ubuntu/nyh_scripts/Tealcat/output.xml'
+		, 'processed'	: '/home/ubuntu/nyh_scripts/Tealcat/output/coll_%s.xml'
 	}
