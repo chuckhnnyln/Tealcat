@@ -16,7 +16,6 @@ $serverfolder = 'exist/rest/db/apps/nyheritage/data';
 $username = 'nyhrest';
 $password = 'anywherebuthere';
 $XSDloc = 'http://54.174.162.83:8080/exist/apps/nyheritage/NYHeritage.xsd';
-#$OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
 $OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
 
 #Functions
@@ -558,6 +557,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $ContactInfo = $Institution->getElementsByTagName( "ContactInfo" )->item(0);
       $ContactInfo->getElementsByTagName( "ContactPerson" )->item(0)->nodeValue = "$ContactPerson";
       $ContactInfo->getElementsByTagName( "ContactEmail" )->item(0)->nodeValue = "$ContactEmail";
+      $ContactInfo->getElementsByTagName( "ContactPhone" )->item(0)->nodeValue = "$ContactPhone";
       $ContactInfo->getElementsByTagName( "Address1" )->item(0)->nodeValue = "$Address1";
       $ContactInfo->getElementsByTagName( "Address2" )->item(0)->nodeValue = "$Address2";
       $ContactInfo->getElementsByTagName( "City" )->item(0)->nodeValue = "$City";
