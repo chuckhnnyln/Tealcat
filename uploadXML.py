@@ -21,7 +21,7 @@ def putFile(file):
 		doc = file[p+1:]
 	else:
 		doc = file
-		
+
 	print doc
 	print 'Storing document in collection %s ... ' % collection
 
@@ -44,8 +44,7 @@ def putFile(file):
 	print 'Server responded with code %s: %s' % (errcode, errmsg)
 
 # For each file in the output folder, call putfile
-for filename in os.listdir('./output'):
+for filename in os.listdir('/home/ubuntu/nyh_scripts/Tealcat/output'):
 	if filename.endswith('.xml'):
 		#print os.path.join('./output/', filename)
-		putFile('./output/' + filename)
-
+		putFile('/home/ubuntu/nyh_scripts/Tealcat/output/' + filename)
