@@ -5,6 +5,7 @@
 #Misc variables
 $NYHTeditforms=3; #Defines how many edit blanks NYHTopic get
 $Subjeditforms=10; #Defines how many edit blanks Subject get
+$Orgseditforms=5; #Defines how many edit blanks InstitutionID gets
 $NYHTopicList = array("","Agriculture","Architecture","Arts & Entertainment","Business & Industry","Community & Events","Daily Life","Education","Environment & Nature","Ethnic Groups","Geography & Maps","Government, Law & Politics","Medicine, Science & Technology","Military & War","People","Philosophy & Religion","Recreation & Sports","Transportation","Work & Labor");
 $NYCounties = array("","Albany","Allegany","Bronx","Broome","Cattaraugus","Cayuga","Chautauqua","Chemung","Chenango","Clinton","Columbia","Cortland","Delaware","Dutchess","Erie","Essex","Franklin","Fulton","Genesee","Greene","Hamilton","Herkimer","Hidalgo","Jefferson","Kings","Lewis","Livingston","Madison","Monroe","Montgomery","Nassau","New York","Niagara","Oneida","Onondaga","Ontario","Orange","Orleans","Oswego","Otsego","Putnam","Queens","Rensselaer","Richmond","Rockland","St. Lawrence","Saratoga","Schenectady","Schoharie","Schuyler","Seneca","Steuben","Suffolk","Sullivan","Tioga","Tompkins","Ulster","Warren","Washington","Wayne","Westchester","Wyoming","Yates");
 $CouncilList = array("","CDLC","CLRC","LILRC","NNYLN","RRLC","SCRLC","WNYLRC","METRO","SENYLRC");
@@ -31,6 +32,7 @@ function NYHTopicDropdown ($prettyi, $i, $NYHTopicList, $Selected) {
   }
   echo "</select>";
 }
+
 
 function CountyOptions ($NYCounties, $Selected) {
   $CountyCount = count($NYCounties);
@@ -90,13 +92,13 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       echo "CollectionID:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='CollectionID' required>";
       echo "Title:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='Title' required>";
       echo "CollectionAlias:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='CollectionAlias' required>";
-      echo "InstitutionID:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='InstitutionID' required>";
-      #echo "CollectionURL:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='CollectionURL' required>";
+      for ($i = 0; $i < $Orgseditforms; $i++) {
+        $prettyi = $i + 1;
+        echo "InstitutionID $prettyi: <input type='text' size='35' maxlength='35' name='InstitutionID-$i'>";
+      }
+      #echo "InstitutionID:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='InstitutionID' required>";
       echo "Abstract:<font color='red'>*</font> <textarea size='35' name='Abstract' cols='35' rows='10' required></textarea>";
-      #echo "Extent: <input type='text' size='35' maxlength='35' name='Extent'>";
       echo "DatesOfOriginal: <input type='text' size='35' maxlength='35' name='DatesOfOriginal'>";
-      #echo "TimePeriod: <input type='text' size='35' maxlength='35' name='TimePeriod'>";
-      #echo "CreatorAttribution: <input type='text' size='35' maxlength='35' name='CreatorAttribution'>";
       for ($i = 0; $i < $NYHTeditforms; $i++) {
         $prettyi = $i + 1;
         NYHTopicDropdown ($prettyi,$i,$NYHTopicList,'');
@@ -105,7 +107,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       #  $prettyi = $i + 1;
       #  echo "Subject $prettyi: <input type='text' size='255' maxlength='255' name='Subject-$i'>";
       #}
-      #echo "Location: <input type='text' size='35' maxlength='35' name='Location'>";
       echo "BiogHistory: <textarea name='BiogHistory' cols='35' rows='10'></textarea>";
       echo "ScopeAndContent:<font color='red'>*</font> <textarea size='35' name='ScopeAndContent' cols='35' rows='10' required></textarea>";
       echo "PublisherOfDigital: <textarea cols='35' rows='10' name='PublisherOfDigital'></textarea>";
@@ -113,7 +114,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'></textarea>";
       echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL'>";
       echo "CollectionType: <input type='text' size='35' maxlength='35' name='CollectionType'>";
-      #echo "SampleImageURL: <input type='text' size='35' maxlength='35' name='SampleImageURL'>";
       echo "YearbookTitle: <input type='text' size='35' maxlength='100' name='YearbookTitle'>";
       echo "SchoolName: <input type='text' size='35' maxlength='100' name='SchoolName'>";
       echo "SchoolCity: <input type='text' size='35' maxlength='100' name='SchoolCity'>";
@@ -172,14 +172,14 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Collections = $xmlDoc->documentElement;
     $Title = $Collections->getElementsByTagName( "Title" )->item(0)->nodeValue;
     $CollectionAlias = $Collections->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue;
-    $InstitutionID = $Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue;
-    #$CollectionURL = $Collections->getElementsByTagName( "CollectionURL" )->item(0)->nodeValue;
+    $Orgscount = $Collections->getElementsByTagName( "InstitutionID" );
+    for ($i = 0; $i < $Orgscount->length; $i++) {
+      $InstitutionID[$i] = $Collections->getElementsByTagName( "InstitutionID" )->item($i)->nodeValue;
+    }
+    #$InstitutionID = $Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue;
     $AbstractSearch = $Collections->getElementsByTagName( "Abstract" )->item(0);
     $Abstract = $AbstractSearch->getElementsByTagName( "div" )->item(0)->nodeValue;
-    #$Extent = $Collections->getElementsByTagName( "Extent" )->item(0)->nodeValue;
     $DatesOfOriginal = $Collections->getElementsByTagName( "DatesOfOriginal" )->item(0)->nodeValue;
-    #$TimePeriod = $Collections->getElementsByTagName( "TimePeriod" )->item(0)->nodeValue;
-    #$CreatorAttribution = $Collections->getElementsByTagName( "CreatorAttribution" )->item(0)->nodeValue;
     $NYHtopiccount = $Collections->getElementsByTagName( "NYHTopic" );
     $NYHTopic = array();
     for ($i = 0; $i < $NYHtopiccount->length; $i++) {
@@ -190,7 +190,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     for ($i = 0; $i < $subjectcount->length; $i++) {
       $Subject[$i] = $Collections->getElementsByTagName( "Subject" )->item($i)->nodeValue;
     }
-    #$Location = $Collections->getElementsByTagName( "Location" )->item(0)->nodeValue;
     $BiogHistorySearch = $Collections->getElementsByTagName( "BiogHistory" )->item(0);
     $BiogHistory = $BiogHistorySearch->getElementsByTagName( "div" )->item(0)->nodeValue;
     $ScopeAndContentSearch = $Collections->getElementsByTagName( "ScopeAndContent" )->item(0);
@@ -225,17 +224,22 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     echo "<form method='post'>";
     echo "<input type='hidden' name='object' value='$object'>";
     echo "<input type='hidden' name='task' value='upcoll'>";
-    echo "<input type='hidden' name='CollectionID' value='$CollectionID'>";
-    echo "CollectionID: <b>$CollectionID</b></br></br>";
+    echo "<input type='hidden' name='OriginID' value='$CollectionID'>";
+    echo "CollectionID:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='CollectionID' value=\"$CollectionID\" required>";
     echo "Title:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='Title' value=\"$Title\" required>";
     echo "CollectionAlias:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='CollectionAlias' value='$CollectionAlias' required>";
-    echo "InstitutionID:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='InstitutionID' value='$InstitutionID' required>";
-    #echo "CollectionURL:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='CollectionURL' value='$CollectionURL' required>";
+    #echo "InstitutionID:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='InstitutionID' value='$InstitutionID' required>";
+    for ($i = 0; $i < $Orgseditforms; $i++) {
+      if ( $i < $Orgscount->length ) {
+        $prettyi = $i + 1;
+        echo "InstitutionID $prettyi: <input type='text' size='35' maxlength='35' name='InstitutionID-$i' value='$InstitutionID[$i]'>";
+      } else {
+        $prettyi = $i + 1;
+        echo "InstitutionID $prettyi: <input type='text' size='35' maxlength='35' name='InstitutionID-$i'>";
+      }
+    }
     echo "Abstract:<font color='red'>*</font> <textarea size='35' name='Abstract' cols='35' rows='10' required>$Abstract</textarea>";
-    #echo "Extent: <input type='text' size='35' maxlength='35' name='Extent' value='$Extent'>";
     echo "DatesOfOriginal: <input type='text' size='35' maxlength='35' name='DatesOfOriginal' value='$DatesOfOriginal'>";
-    #echo "TimePeriod: <input type='text' size='35' maxlength='35' name='TimePeriod' value='$TimePeriod'>";
-    #echo "CreatorAttribution: <input type='text' size='35' maxlength='35' name='CreatorAttribution' value='$CreatorAttribution'>";
     for ($i = 0; $i < $NYHTeditforms; $i++) {
       if ( $i < $NYHtopiccount->length ) {
         $prettyi = $i + 1;
@@ -256,7 +260,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #    echo "Subject $prettyi: <input type='text' size='255' maxlength='255' name='Subject-$i'>";
     #  }
     #}
-    #echo "Location: <input type='text' size='35' maxlength='35' name='Location' value='$Location'>";
     echo "BiogHistory: <textarea name='BiogHistory' cols='35' rows='10'>$BiogHistory</textarea>";
     echo "ScopeAndContent:<font color='red'>*</font> <textarea size='35' name='ScopeAndContent' cols='35' rows='10' required>$ScopeAndContent</textarea>";
     echo "PublisherOfDigital: <textarea name='PublisherOfDigital' cols='35' rows='10'>$PublisherOfDigital</textarea>";
@@ -264,7 +267,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'>$ScopeAndContentSource</textarea>";
     echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL' value='$FindingAidURL'>";
     echo "CollectionType: <input type='text' size='35' maxlength='35' name='CollectionType' value='$CollectionType'>";
-    #echo "SampleImageURL: <input type='text' size='35' maxlength='35' name='SampleImageURL' value='$SampleImageURL'>";
     echo "YearbookTitle: <input type='text' size='35' maxlength='100' name='YearbookTitle' value='$YearbookTitle'>";
     echo "SchoolName: <input type='text' size='35' maxlength='100' name='SchoolName' value='$SchoolName'>";
     echo "SchoolCity: <input type='text' size='35' maxlength='100' name='SchoolCity' value='$SchoolCity'>";
@@ -382,16 +384,18 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     ### Updating the collection!
     #Get the data from the form
     $CollectionID = $_REQUEST['CollectionID'];
+    $OriginID = $_REQUEST['OriginID'];
+    $CollectionID = trim($CollectionID);
+    $OriginID = trim($OriginID);
     $Title = $_REQUEST['Title'];
     $CollectionAlias = $_REQUEST['CollectionAlias'];
-    $InstitutionID = $_REQUEST['InstitutionID'];
-    #$CollectionURL = $_REQUEST['CollectionURL'];
+    #$InstitutionID = $_REQUEST['InstitutionID'];
+    $InstitutionID = array();
+    for ($i = 0; $i < $Orgseditforms; $i++) {
+      if ( isset($_REQUEST['InstitutionID-' . $i]) ) $InstitutionID[$i] = $_REQUEST['InstitutionID-' . $i];
+    }
     $Abstract = $_REQUEST['Abstract'];
-    #$Extent = $_REQUEST['Extent'];
     $DatesOfOriginal = $_REQUEST['DatesOfOriginal'];
-    #$TimePeriod = $_REQUEST['TimePeriod'];
-    #$CreatorAttribution = $_REQUEST['CreatorAttribution'];
-    #$Location = $_REQUEST['Location'];
     $BiogHistory = $_REQUEST['BiogHistory'];
     $ScopeAndContent = $_REQUEST['ScopeAndContent'];
     $PublisherOfDigital = $_REQUEST['PublisherOfDigital'];
@@ -399,13 +403,13 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $ScopeAndContentSource = $_REQUEST['ScopeAndContentSource'];
     $FindingAidURL = $_REQUEST['FindingAidURL'];
     $CollectionType = $_REQUEST['CollectionType'];
-    #$SampleImageURL = $_REQUEST['SampleImageURL'];
     $YearbookTitle = $_REQUEST['YearbookTitle'];
     $SchoolName = $_REQUEST['SchoolName'];
     $SchoolCity = $_REQUEST['SchoolCity'];
     $Author = $_REQUEST['Author'];
     $object = $_REQUEST['object'];
-    $objectid = $object . "_" . $CollectionID;
+    $OldObjectID = $object . "_" . $OriginID;
+    $NewObjectID = $object . "_" . $CollectionID;
     $NYHTopic = array();
     for ($i = 0; $i < $NYHTeditforms; $i++) {
       if ( isset($_REQUEST['NYHTopic-' . $i]) ) $NYHTopic[$i] = $_REQUEST['NYHTopic-' . $i];
@@ -415,8 +419,8 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       if ( isset($_REQUEST['Subject-' . $i]) ) $Subject[$i] = $_REQUEST['Subject-' . $i];
     }
     #Get the original xml from the server
-    $url="$protocol://$serverurl/$serverfolder/$objectid.xml";
-    $cmd="curl $protocol://$serverurl/$serverfolder/$objectid.xml";
+    $url="$protocol://$serverurl/$serverfolder/$NewObjectID.xml";
+    $cmd="curl $protocol://$serverurl/$serverfolder/$OldObjectID.xml";
     $collxml = shell_exec($cmd);
     $xmlDoc = new DOMDocument();
     $xmlDoc->preserveWhiteSpace = false;
@@ -424,20 +428,16 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $xmlDoc->loadXML($collxml);
     $Collections = $xmlDoc->documentElement;
     #Update XML fields from form data
-    #Following works but should create new collection
-    #$Collections->getElementsByTagName( "Collection" )->item(0)->setAttribute('CollectionID','$CollectionID');
+    $Collections->setAttribute('xmlns:xsi','http://www.w3.org/2001/XMLSchema-instance');
+    $Collections->setAttribute('CollectionID',$CollectionID);
+    $Collections->setAttribute('xsi:noNamespaceSchemaLocation',$XSDloc);
     $Collections->getElementsByTagName( "Title" )->item(0)->nodeValue = "$Title";
     $Collections->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
-    $Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue = "$InstitutionID";
-    #$Collections->getElementsByTagName( "CollectionURL" )->item(0)->nodeValue = "$CollectionURL";
+    #$Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue = "$InstitutionID";
     $AbstractSearch = $Collections->getElementsByTagName( "Abstract" )->item(0);
     $Abstract = htmlspecialchars($Abstract);
     $AbstractSearch = $AbstractSearch->getElementsByTagName( "div" )->item(0)->nodeValue = "$Abstract";
-    #$Collections->getElementsByTagName( "Extent" )->item(0)->nodeValue = "$Extent";
     $Collections->getElementsByTagName( "DatesOfOriginal" )->item(0)->nodeValue = "$DatesOfOriginal";
-    #$Collections->getElementsByTagName( "TimePeriod" )->item(0)->nodeValue = "$TimePeriod";
-    #$Collections->getElementsByTagName( "CreatorAttribution" )->item(0)->nodeValue = "$CreatorAttribution";
-    #$Collections->getElementsByTagName( "Location" )->item(0)->nodeValue = "$Location";
     $BiogHistorySearch = $Collections->getElementsByTagName( "BiogHistory" )->item(0);
     $BiogHistory = htmlspecialchars($BiogHistory);
     $BiogHistorySearch->getElementsByTagName( "div" )->item(0)->nodeValue = "$BiogHistory";
@@ -454,7 +454,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $FindingAidURL = htmlspecialchars($FindingAidURL,ENT_XML1);
     $Collections->getElementsByTagName( "FindingAidURL" )->item(0)->nodeValue = "$FindingAidURL";
     $Collections->getElementsByTagName( "CollectionType" )->item(0)->nodeValue = "$CollectionType";
-    #$Collections->getElementsByTagName( "SampleImageURL" )->item(0)->nodeValue = "$SampleImageURL";
     $NewElementSearch = "false";
     $AllElements = $Collections->getElementsByTagName('*');
     foreach ($AllElements as $EachElement) {
@@ -494,15 +493,22 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $TopicRemoveList = array ();
     foreach ( $RemoveList as $x ) $TopicRemoveList[] = $x;
     if ( count($TopicRemoveList) > 0) foreach ( $TopicRemoveList as $y ) $y->parentNode->removeChild($y);
-    #Add new Subjects
-    #for ($i = 0; $i < $Subjeditforms; $i++) {
-    #  if ( $Subject[$i] !== "" ) {
-    #    $Added = $xmlDoc->createElement("Subject");
-    #    $AddedText = $xmlDoc->createTextNode($Subject[$i]);
-    #    $Added->appendChild($AddedText);
-    #    $Collections->appendChild($Added);
-    #  }
-    #}
+
+    #Remove existing InstitutionIDs
+    $RemoveList = $Collections->getElementsByTagName( "InstitutionID" );
+    $TopicRemoveList = array ();
+    foreach ( $RemoveList as $x ) $TopicRemoveList[] = $x;
+    if ( count($TopicRemoveList) > 0) foreach ( $TopicRemoveList as $y ) $y->parentNode->removeChild($y);
+    #Add new InstitutionIDs
+    for ($i = 0; $i < $Orgseditforms; $i++) {
+      if ( $InstitutionID[$i] !== "" ) {
+        $Added = $xmlDoc->createElement("InstitutionID");
+        $AddedText = $xmlDoc->createTextNode($InstitutionID[$i]);
+        $Added->appendChild($AddedText);
+        $Collections->appendChild($Added);
+      }
+    }
+
     #Place XML on server
     $xml_data = $xmlDoc->saveXML($xmlDoc->documentElement);
     $ch = curl_init($url);
@@ -513,6 +519,20 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
     $output = curl_exec($ch);
     curl_close($ch);
+
+    #Remove old collectionID XML if needed
+    if ( $CollectionID !== $OriginID ) {
+      #Delete the item!
+      $url="$protocol://$serverurl/$serverfolder/$OldObjectID.xml";
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $output = curl_exec($ch);
+      echo curl_error($ch) . "<br><br>";
+      curl_close($ch);
+    }
+
     echo "Updated " . $CollectionAlias . " : <b>" . $Title . "</b><br><br>";
     echo "Changes to the metadata <b>will not</b> appear immediately for the public. Metadata changes will update within 15 minutes.<br><br>";
     ### End Updating the Collection
@@ -619,14 +639,13 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $CollectionID = strtoupper($CollectionID);
     $Title = $_REQUEST['Title'];
     $CollectionAlias = $_REQUEST['CollectionAlias'];
-    $InstitutionID = $_REQUEST['InstitutionID'];
-    #$CollectionURL = $_REQUEST['CollectionURL'];
+    #$InstitutionID = $_REQUEST['InstitutionID'];
+    $InstitutionID = array();
+    for ($i = 0; $i < $Orgseditforms; $i++) {
+      if ( isset($_REQUEST['InstitutionID-' . $i]) ) $InstitutionID[$i] = $_REQUEST['InstitutionID-' . $i];
+    }
     $Abstract = $_REQUEST['Abstract'];
-    #$Extent = $_REQUEST['Extent'];
     $DatesOfOriginal = $_REQUEST['DatesOfOriginal'];
-    #$TimePeriod = $_REQUEST['TimePeriod'];
-    #$CreatorAttribution = $_REQUEST['CreatorAttribution'];
-    #$Location = $_REQUEST['Location'];
     $BiogHistory = $_REQUEST['BiogHistory'];
     $ScopeAndContent = $_REQUEST['ScopeAndContent'];
     $PublisherOfDigital = $_REQUEST['PublisherOfDigital'];
@@ -634,7 +653,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $ScopeAndContentSource = $_REQUEST['ScopeAndContentSource'];
     $FindingAidURL = $_REQUEST['FindingAidURL'];
     $CollectionType = $_REQUEST['CollectionType'];
-    #$SampleImageURL = $_REQUEST['SampleImageURL'];
     $YearbookTitle = $_REQUEST['YearbookTitle'];
     $SchoolName = $_REQUEST['SchoolName'];
     $SchoolCity = $_REQUEST['SchoolCity'];
@@ -664,16 +682,11 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
 
     $Collections->appendChild($xmlDoc->createElement('Title',$Title));
     $Collections->appendChild($xmlDoc->createElement('CollectionAlias',$CollectionAlias));
-    $Collections->appendChild($xmlDoc->createElement('InstitutionID',$InstitutionID));
-    #$Collections->appendChild($xmlDoc->createElement('CollectionURL',$CollectionURL));
+    #$Collections->appendChild($xmlDoc->createElement('InstitutionID',$InstitutionID));
     $AbstractSearch = $xmlDoc->createElement('Abstract');
     $Collections->appendChild($AbstractSearch);
     $AbstractSearch->appendChild($xmlDoc->createElement('div',htmlspecialchars($Abstract)));
-    #$Collections->appendChild($xmlDoc->createElement('Extent',$Extent));
     $Collections->appendChild($xmlDoc->createElement('DatesOfOriginal',$DatesOfOriginal));
-    #$Collections->appendChild($xmlDoc->createElement('TimePeriod',$TimePeriod));
-    #$Collections->appendChild($xmlDoc->createElement('CreatorAttribution',$CreatorAttribution));
-    #$Collections->appendChild($xmlDoc->createElement('Location',$Location));
     $BiogHistorySearch = $xmlDoc->createElement('BiogHistory');
     $Collections->appendChild($BiogHistorySearch);
     $BiogHistorySearch->appendChild($xmlDoc->createElement('div',htmlspecialchars($BiogHistory)));
@@ -687,7 +700,6 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Collections->appendChild($xmlDoc->createElement('LocationOfOriginals',htmlspecialchars($LocationOfOriginals)));
     $Collections->appendChild($xmlDoc->createElement('FindingAidURL',$FindingAidURL));
     $Collections->appendChild($xmlDoc->createElement('CollectionType',$CollectionType));
-    #$Collections->appendChild($xmlDoc->createElement('SampleImageURL',$SampleImageURL));
     $Collections->appendChild($xmlDoc->createElement('YearbookTitle',$YearbookTitle));
     $Collections->appendChild($xmlDoc->createElement('SchoolName',$SchoolName));
     $Collections->appendChild($xmlDoc->createElement('SchoolCity',$SchoolCity));
@@ -697,6 +709,15 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       if ( $NYHTopic[$i] !== "" ) {
         $NYHTopic[$i] = htmlspecialchars($NYHTopic[$i]);
         $Collections->appendChild($xmlDoc->createElement('NYHTopic',$NYHTopic[$i]));
+      }
+    }
+    #Add new InstitutionIDs
+    for ($i = 0; $i < $Orgseditforms; $i++) {
+      if ( $InstitutionID[$i] !== "" ) {
+        $Added = $xmlDoc->createElement("InstitutionID");
+        $AddedText = $xmlDoc->createTextNode($InstitutionID[$i]);
+        $Added->appendChild($AddedText);
+        $Collections->appendChild($Added);
       }
     }
     #Add new Subjects
