@@ -6,3 +6,7 @@ output
 output.xml
 nyhconfig.*
 *.pyc
+<<<<<<< HEAD
+=======
+*.inc
+>>>>>>> 469d0fdff639fb07b7e39950f92b2279c1b03c06
