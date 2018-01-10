@@ -10,7 +10,7 @@ import nyhvariables
 nyh_topics = nyhvariables.topics()
 
 oai_pre = nyhvariables.namespaces()['oai_pre']
-dc_pre = nyhvariables.namespaces()['dc_pre'] 
+dc_pre = nyhvariables.namespaces()['dc_pre']
 
 list_records = nyhvariables.namespaces()['list_records']
 record = nyhvariables.namespaces()['record']
@@ -67,11 +67,6 @@ def get_metadata(collection_list):
 						id = dc_elements.findall(identifier)
 						for i in id:
 							coll = i.text.replace(";", "").rstrip().upper()
-<<<<<<< HEAD
-							if coll == 'XJM002':
-								print ('XJM002')
-=======
->>>>>>> 469d0fdff639fb07b7e39950f92b2279c1b03c06
 							if coll in collection_list:
 								if coll not in nyh_metadata:
 									#print("New collection found: \t%s" % coll)
@@ -110,7 +105,7 @@ def get_metadata(collection_list):
 									for l in location_list:
 										l = l.strip().title()
 										add_to_list(nyh_metadata[coll]['location'], l)
-										
+
 								# Get the dates
 								for date_field in dc_elements.findall(hidden_date):
 									date_list = date_field.text.split(';')
@@ -122,8 +117,8 @@ def get_metadata(collection_list):
 												if 1600 <= int(s) <= 2030:
 													add_to_list(nyh_metadata[coll]['date'], (int(s)/10)*10)
 													#print '%s|%s|%s' % (d, s, (int(s)/10)*10)
-										
-										
+
+
 
 	return nyh_metadata
 
@@ -197,11 +192,11 @@ def process_collections(nyh_collections):
 			for e in xmlExtent:
 				collection.remove(e)
 			ET.SubElement(collection, 'Extent').text = extent
-			
+
 			xmlCollectionURL = collection.findall('CollectionURL')
 			for u in xmlCollectionURL:
 				collection.remove(u)
-				
+
 			#if(len(xmlCollectionURL) < 1):
 			collTitle = ''
 			collAlias = ''
@@ -221,8 +216,8 @@ def process_collections(nyh_collections):
 			xmlCreator = collection.findall('CreatorAttribution')
 			for c in xmlCreator:
 				collection.remove(c)
-			ET.SubElement(collection, 'CreatorAttribution').text = creator			
-			
+			ET.SubElement(collection, 'CreatorAttribution').text = creator
+
 			subject = get_field_from_array(sorted(nyh_collections[coll_id]['subject'], key=lambda x:[1], reverse=True), list_length)
 			xmlSubject = collection.findall('Subject')
 			for s in xmlSubject:
@@ -230,7 +225,7 @@ def process_collections(nyh_collections):
 			subj_list = subject.split(';')
 			for subj in subj_list:
 				ET.SubElement(collection, 'Subject').text = subj.strip()
-			
+
 			xmlLocation = collection.findall('Location')
 			for l in xmlLocation:
 				collection.remove(l)
@@ -238,7 +233,7 @@ def process_collections(nyh_collections):
 			loc_list = location.split(';')
 			for loc in loc_list:
 				ET.SubElement(collection, 'Location').text = loc.strip()
-				
+
 			xmlTimePeriods = collection.findall('TimePeriod')
 			for t in xmlTimePeriods:
 				collection.remove(t)
@@ -246,18 +241,18 @@ def process_collections(nyh_collections):
 			tp_list = timePeriods.split(';')
 			for tp in tp_list:
 				ET.SubElement(collection, 'TimePeriod').text = tp.strip()
-            
+
 			xml.write(nyhvariables.local_paths()['processed'] % coll_id)
 		except:
 			print("Unexpected error:", sys.exc_info())
-	
-	
+
+
 def main(argv):
 	collection_list = get_collections_list()
 	nyh_collections = get_metadata(collection_list)
 	process_collections(nyh_collections)
-	
-	
-	
+
+
+
 if __name__ == "__main__":
 	main(sys.argv[1:])
