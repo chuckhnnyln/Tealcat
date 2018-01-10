@@ -67,6 +67,8 @@ def get_metadata(collection_list):
 						id = dc_elements.findall(identifier)
 						for i in id:
 							coll = i.text.replace(";", "").rstrip().upper()
+							if coll == 'XJM002':
+								print ('XJM002')
 							if coll in collection_list:
 								if coll not in nyh_metadata:
 									#print("New collection found: \t%s" % coll)
