@@ -6,4 +6,6 @@ output
 output.xml
 nyhconfig.*
 *.pyc
+# Adding passwords and Mac related crap
 *.inc
+.DS_Store
