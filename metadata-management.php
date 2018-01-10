@@ -2,6 +2,8 @@
 #This allows the adding, updating, and deletion of collections and Institution from tealcat.
 #Chuck Henry August 2017
 
+require '/var/www/meta/tealcat_db.inc';
+
 #Misc variables
 $NYHTeditforms=3; #Defines how many edit blanks NYHTopic get
 $Subjeditforms=10; #Defines how many edit blanks Subject get
@@ -14,8 +16,6 @@ $CouncilList = array("","CDLC","CLRC","LILRC","NNYLN","RRLC","SCRLC","WNYLRC","M
 $protocol = 'http';
 $serverurl = '127.0.0.1:8080';
 $serverfolder = 'exist/rest/db/apps/nyheritage/data';
-$username = 'nyhrest';
-$password = 'anywherebuthere';
 $XSDloc = 'http://54.174.162.83:8080/exist/apps/nyheritage/NYHeritage.xsd';
 $OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
 
