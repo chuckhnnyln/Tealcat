@@ -303,7 +303,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $AboutSearch = $Institution->getElementsByTagName( "About" )->item(0);
     $About = $AboutSearch->getElementsByTagName( "div" )->item(0)->nodeValue;
     $CouncilID = $Institution->getElementsByTagName( "CouncilID" )->item(0)->nodeValue;
-    $LogoURL = $Institution->getElementsByTagName( "LogoURL" )->item(0)->nodeValue;
+    #$LogoURL = $Institution->getElementsByTagName( "LogoURL" )->item(0)->nodeValue;
     $ProxyMember = $Institution->getElementsByTagName( "ProxyMember" )->item(0)->nodeValue;
     $DisplayName = $Institution->getElementsByTagName( "DisplayName" )->item(0)->nodeValue;
 

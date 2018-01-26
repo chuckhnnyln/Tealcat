@@ -10,3 +10,4 @@ nyhconfig.*
 # Adding passwords and Mac related crap
 *.inc
 .DS_Store
+*.xml
