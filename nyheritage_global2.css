@@ -1,0 +1,66 @@
+a, h2
+{ color: #ed4a46;}
+
+.Header-logoImage
+{ margin-top: 5px !important; }
+
+.Header-header
+{ height: 120px; }
+
+
+@media screen and (min-width: 768px) {
+
+	.CoreLayout-mainWrapperContainer
+	{ margin-top: 120px; }
+
+}
+
+@media screen and (min-width: 1050px) {
+
+	.Header-controls,
+	.Header-headerMenuLinks
+	{ position: static; }
+
+	.Header-hamburgerHolder
+	{ float: left; }
+
+	.Header-controls
+	{ width: 100%; }
+
+	.Header-hamburgerHolder .btn-group button
+	{ display: none; }
+
+	.Header-headerMenuLinks
+	{ display: flex; flex-wrap: nowrap; background-color: #002d75; border: none; box-shadow: none; }
+
+	.Header-headerMenuLinks a
+	{ background-color: #002d75!important; }
+
+	.Header-headerMenuLinks li a:hover
+	{ border-radius: 4px; color: #fcfcfc!important; background-color: #11509c!important; }
+
+	.Header-headerMenuLinks h3
+	{ margin: 5px; color: #fcfcfc; }
+
+	.Header-header
+	{ height: 75px; }
+
+	.CoreLayout-mainWrapperContainer
+	{ margin-top: 110px; }
+
+}
+
+@media screen and (min-width: 1051px) {
+
+	.Header-hamburgerHolder
+	{ float: right; }
+
+	.Breadcrumbs-breadcrumbs
+	{ display: none; }
+
+	.Header-logoNameContainer
+	{overflow:inherit;}
+
+	.Header-controls.undefined
+	{ padding-top: 5px; }
+}
