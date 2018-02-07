@@ -31,13 +31,13 @@ a, h2
 	{ display: none; }
 
 	.Header-headerMenuLinks
-	{ display: flex; flex-wrap: nowrap; background-color: #002d75; border: none; box-shadow: none; }
+	{ display: flex; flex-wrap: nowrap; background-color: #58585B; border: none; box-shadow: none; }
 
 	.Header-headerMenuLinks a
-	{ background-color: #002d75!important; }
+	{ background-color: #58585B!important; }
 
 	.Header-headerMenuLinks li a:hover
-	{ border-radius: 4px; color: #fcfcfc!important; background-color: #11509c!important; }
+	{ border-radius: 4px; color: #fcfcfc!important; background-color: #999999!important; }
 
 	.Header-headerMenuLinks h3
 	{ margin: 5px; color: #fcfcfc; }

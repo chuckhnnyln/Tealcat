@@ -127,6 +127,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       echo "<input type='hidden' name='task' value='addnew-inst'>";
       echo "InstitutionID:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='InstitutionID' required>";
       echo "InstitutionName:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='InstitutionName' required>";
+      echo "CollectionAlias:<font color='red'>*</font> <input type='text' size='35' maxlength='35' name='CollectionAlias' required>";
       echo "ParentOrganization: <input type='text' size='35' maxlength='50' name='ParentOrganization'>";
       echo "Department: <input type='text' size='35' maxlength='50' name='Department'>";
       echo "ContactPerson: <input type='text' size='255' maxlength='255' name='ContactPerson'>";
@@ -285,6 +286,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #Harvest the data from the xml
     $Institution = $xmlDoc->documentElement;
     $InstitutionName = $Institution->getElementsByTagName( "InstitutionName" )->item(0)->nodeValue;
+    $CollectionAlias = $Institution->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue;
     $ParentOrganization = $Institution->getElementsByTagName( "ParentOrganization" )->item(0)->nodeValue;
     $Department = $Institution->getElementsByTagName( "Department" )->item(0)->nodeValue;
     $ContactInfo = $Institution->getElementsByTagName( "ContactInfo" )->item(0);
@@ -314,6 +316,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     echo "<input type='hidden' name='InstitutionID' value='$InstitutionID'>";
     echo "InstitutionID: <b>$InstitutionID</b></br></br>";
     echo "InstitutionName:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='InstitutionName' value=\"$InstitutionName\" required>";
+    echo "CollectionAlias:<font color='red'>*</font> <input type='text' size='35' maxlength='255' name='CollectionAlias' value=\"$CollectionAlias\" required>";
     echo "ParentOrganization: <input type='text' size='35' maxlength='50' name='ParentOrganization' value=\"$ParentOrganization\">";
     echo "Department: <input type='text' size='35' maxlength='50' name='Department' value='$Department'>";
     echo "ContactPerson: <input type='text' size='255' maxlength='255' name='ContactPerson' value='$ContactPerson'>";
@@ -540,6 +543,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $InstitutionID = $_REQUEST['InstitutionID'];
     $InstitutionName = $_REQUEST['InstitutionName'];
     $ParentOrganization = $_REQUEST['ParentOrganization'];
+    $CollectionAlias = $_REQUEST['CollectionAlias'];
     $Department = $_REQUEST['Department'];
       $ContactPerson = $_REQUEST['ContactPerson'];
       $ContactPhone = $_REQUEST['ContactPhone'];
@@ -572,6 +576,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Institution = $xmlDoc->documentElement;
     #Update XML fields from form data
     $Institution->getElementsByTagName( "InstitutionName" )->item(0)->nodeValue = "$InstitutionName";
+    $Institution->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
     $Institution->getElementsByTagName( "ParentOrganization" )->item(0)->nodeValue = "$ParentOrganization";
     $Institution->getElementsByTagName( "Department" )->item(0)->nodeValue = "$Department";
     $ContactInfo = $Institution->getElementsByTagName( "ContactInfo" )->item(0);
@@ -744,6 +749,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
   } elseif ( $task == "addnew-inst" ) {
     $InstitutionID = $_REQUEST['InstitutionID'];
     $InstitutionName = $_REQUEST['InstitutionName'];
+    $CollectionAlias = $_REQUEST['CollectionAlias'];
     $ParentOrganization = $_REQUEST['ParentOrganization'];
     $Department = $_REQUEST['Department'];
       $ContactPerson = $_REQUEST['ContactPerson'];
@@ -781,6 +787,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
 
     $Institutions->appendChild($xmlDoc->createElement('InstitutionName',$InstitutionName));
     $Institutions->appendChild($xmlDoc->createElement('ParentOrganization',$ParentOrganization));
+    $Institutions->appendChild($xmlDoc->createElement('CollectionAlias',$CollectionAlias));
     $Institutions->appendChild($xmlDoc->createElement('Department',$Department));
     $ContactInfo = $xmlDoc->createElement('ContactInfo');
     $Institutions->appendChild($ContactInfo);
