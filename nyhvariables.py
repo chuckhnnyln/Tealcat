@@ -3,7 +3,7 @@
 
 def collection_url(alias, title):
 	# Ryan and Chuck, this is where the url is build for the collection URL. Change as necessary
-	return 'http://cdm16694.contentdm.oclc.org/cdm/search/collection/' + alias + '/searchterm/' + title + '/field/relatig/mode/exact/conn/and/order/date'
+	return 'https://cdm16694.contentdm.oclc.org/digital/collection/' + alias + '/search/searchterm/' + title + '/field/relatig/mode/exact/conn/and/order/date'
 
 def namespaces():
 	return {
