@@ -1,6 +1,6 @@
 <?php
 #This allows the adding, updating, and deletion of collections and Institution from tealcat.
-#Chuck Henry August 2017
+#Chuck Henry August 2017 for NYHeritage.org
 
 require '/var/www/meta/tealcat_db.inc';
 
