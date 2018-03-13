@@ -7,6 +7,15 @@ a, h2
 .Header-header
 { height: 120px; }
 
+.Breadcrumbs-breadcrumbs
+	{ display: flex; }
+
+@media screen and (max-width: 768px) {
+
+	.Breadcrumbs-breadcrumbs
+		{ display: none; }
+
+}
 
 @media screen and (min-width: 768px) {
 
@@ -54,9 +63,6 @@ a, h2
 
 	.Header-hamburgerHolder
 	{ float: right; }
-
-	.Breadcrumbs-breadcrumbs
-	{ display: none; }
 
 	.Header-logoNameContainer
 	{overflow:inherit;}
