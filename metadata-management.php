@@ -434,6 +434,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Collections->setAttribute('xmlns:xsi','http://www.w3.org/2001/XMLSchema-instance');
     $Collections->setAttribute('CollectionID',$CollectionID);
     $Collections->setAttribute('xsi:noNamespaceSchemaLocation',$XSDloc);
+    $Title = htmlspecialchars($Title);
     $Collections->getElementsByTagName( "Title" )->item(0)->nodeValue = "$Title";
     $Collections->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
     #$Collections->getElementsByTagName( "InstitutionID" )->item(0)->nodeValue = "$InstitutionID";
@@ -575,6 +576,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $xmlDoc->loadXML($instxml);
     $Institution = $xmlDoc->documentElement;
     #Update XML fields from form data
+    $InstitutionName = htmlspecialchars ($InstitutionName);
     $Institution->getElementsByTagName( "InstitutionName" )->item(0)->nodeValue = "$InstitutionName";
     $Institution->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
     $Institution->getElementsByTagName( "ParentOrganization" )->item(0)->nodeValue = "$ParentOrganization";
@@ -598,7 +600,8 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Institution->getElementsByTagName( "CouncilID" )->item(0)->nodeValue = "$CouncilID";
     #$Institution->getElementsByTagName( "LogoURL" )->item(0)->nodeValue = "$LogoURL";
     $Institution->getElementsByTagName( "ProxyMember" )->item(0)->nodeValue = "$ProxyMember";
-    $DisplayName = CreateDisplayName ($InstitutionName,$ParentOrganization);
+    $DisplayName = CreateDisplayName (htmlspecialchars_decode($InstitutionName),$ParentOrganization);
+    $DisplayName = htmlspecialchars($DisplayName);
     $Institution->getElementsByTagName( "DisplayName" )->item(0)->nodeValue = "$DisplayName";
 
     #Place XML on server
@@ -785,6 +788,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Institutions->setAttribute('InstitutionID',$InstitutionID);
     $Institutions->setAttribute('xsi:noNamespaceSchemaLocation',$XSDloc);
 
+    $InstitutionName = htmlspecialchars($InstitutionName);
     $Institutions->appendChild($xmlDoc->createElement('InstitutionName',$InstitutionName));
     $Institutions->appendChild($xmlDoc->createElement('ParentOrganization',$ParentOrganization));
     $Institutions->appendChild($xmlDoc->createElement('CollectionAlias',$CollectionAlias));
@@ -809,7 +813,8 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     $Institutions->appendChild($xmlDoc->createElement('CouncilID',$CouncilID));
     #$Institutions->appendChild($xmlDoc->createElement('LogoURL',$LogoURL));
     $Institutions->appendChild($xmlDoc->createElement('ProxyMember',$ProxyMember));
-    $DisplayName = CreateDisplayName ($InstitutionName, $ParentOrganization);
+    $DisplayName = CreateDisplayName (htmlspecialchars_decode($InstitutionName), $ParentOrganization);
+    $DisplayName = htmlspecialchars($DisplayName);
     $Institutions->appendChild($xmlDoc->createElement('DisplayName',$DisplayName));
 
     #Place XML on server
