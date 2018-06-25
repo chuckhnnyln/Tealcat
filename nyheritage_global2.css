@@ -10,6 +10,9 @@ a, h2
 .Breadcrumbs-breadcrumbs
 	{ display: flex; }
 
+.highlightSelected
+	{ background-color: #46dced; }
+
 @media screen and (max-width: 768px) {
 
 	.Breadcrumbs-breadcrumbs
