@@ -109,7 +109,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
       #}
       echo "BiogHistory: <textarea name='BiogHistory' cols='35' rows='10'></textarea>";
       echo "ScopeAndContent:<font color='red'>*</font> <textarea size='35' name='ScopeAndContent' cols='35' rows='10' required></textarea>";
-      echo "PublisherOfDigital: <textarea cols='35' rows='10' name='PublisherOfDigital'></textarea>";
+      echo "PublisherOfDigital: <textarea maxlength='512' cols='35' rows='3' name='PublisherOfDigital'></textarea>";
       echo "LocationOfOriginals: <textarea name='LocationOfOriginals' cols='35' rows='10'></textarea>";
       echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'></textarea>";
       echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL'>";
@@ -263,7 +263,7 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #}
     echo "BiogHistory: <textarea name='BiogHistory' cols='35' rows='10'>$BiogHistory</textarea>";
     echo "ScopeAndContent:<font color='red'>*</font> <textarea size='35' name='ScopeAndContent' cols='35' rows='10' required>$ScopeAndContent</textarea>";
-    echo "PublisherOfDigital: <textarea name='PublisherOfDigital' cols='35' rows='10'>$PublisherOfDigital</textarea>";
+    echo "PublisherOfDigital: <textarea name='PublisherOfDigital' maxlength='512' cols='35' rows='3'>$PublisherOfDigital</textarea>";
     echo "LocationOfOriginals: <textarea name='LocationOfOriginals' size='35' maxlength='35'>$LocationOfOriginals</textarea>";
     echo "ScopeAndContentSource: <textarea name='ScopeAndContentSource' cols='35' rows='10'>$ScopeAndContentSource</textarea>";
     echo "FindingAidURL: <input type='text' size='35' maxlength='255' name='FindingAidURL' value='$FindingAidURL'>";
