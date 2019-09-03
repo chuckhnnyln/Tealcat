@@ -578,7 +578,11 @@ if ( ( $action == "add" ) && ( isset($_REQUEST['id']) ) ) {
     #Update XML fields from form data
     $InstitutionName = htmlspecialchars ($InstitutionName);
     $Institution->getElementsByTagName( "InstitutionName" )->item(0)->nodeValue = "$InstitutionName";
-    $Institution->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
+    if ( isset($Institution->InstitutionName) ) {
+      $Institution->getElementsByTagName( "CollectionAlias" )->item(0)->nodeValue = "$CollectionAlias";
+    } else {
+      $Institution->appendChild($xmlDoc->createElement('CollectionAlias',$CollectionAlias));
+    }
     $Institution->getElementsByTagName( "ParentOrganization" )->item(0)->nodeValue = "$ParentOrganization";
     $Institution->getElementsByTagName( "Department" )->item(0)->nodeValue = "$Department";
     $ContactInfo = $Institution->getElementsByTagName( "ContactInfo" )->item(0);
