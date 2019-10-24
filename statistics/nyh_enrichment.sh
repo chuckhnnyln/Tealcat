@@ -39,14 +39,17 @@ while read FILE; do
 for ITEM in "${FILELIST[@]}"
 	do
     ALIASID=`echo $ITEM | cut -d "^" -f1`
+    PATHID=`echo $ITEM | cut -d "^" -f2`
+    PATHID=${PATHID##*/}
     echo $ALIASID >> stage2.csv
+    echo '"'$PATHID >> stage2.csv
 	done
 sort stage2.csv > stage3.csv
 uniq stage3.csv > alias_master.csv
 rm stage2.csv stage3.csv
 
 ##Make the final usable enrichment csv
-
+exit 0
 echo "Creating usable enrichment file."
 #Read AliasID master list
 IFS=$'\n'
