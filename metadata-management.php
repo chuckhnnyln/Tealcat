@@ -16,7 +16,7 @@ $CouncilList = array("","CDLC","CLRC","LILRC","NNYLN","RRLC","SCRLC","WNYLRC","M
 $protocol = 'http';
 $serverurl = '127.0.0.1:8080';
 $serverfolder = 'exist/rest/db/apps/nyheritage/data';
-$XSDloc = 'http://54.174.162.83:8080/exist/apps/nyheritage/NYHeritage.xsd';
+$XSDloc = 'http://18.204.203.159:8080/exist/apps/nyheritage/NYHeritage.xsd';
 $OAIProcessCMD = '/home/ubuntu/nyh_scripts/Tealcat/process_oai.sh';
 
 #Functions

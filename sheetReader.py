@@ -16,7 +16,7 @@ def output_collection_XML(data, id_column):
 	if data[id_column] <> 'BLANK':
 		root = ET.Element('Collection')
 		root.set('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-		root.set('xsi:noNamespaceSchemaLocation', 'http://54.174.162.83/:8080/exist/apps/nyheritage/NYHeritage.xsd')
+		root.set('xsi:noNamespaceSchemaLocation', 'http://18.204.203.159/:8080/exist/apps/nyheritage/NYHeritage.xsd')
 		root.set('CollectionID', data[id_column])
 
 		ET.SubElement(root, 'Title').text = data[0]
@@ -76,7 +76,7 @@ def output_collection_XML(data, id_column):
 def output_institution_XML(data):
 	root = ET.Element('Institution')
 	root.set('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-	root.set('xsi:noNamespaceSchemaLocation', 'http://54.174.162.83:8080/exist/apps/nyheritage/NYHeritage.xsd')
+	root.set('xsi:noNamespaceSchemaLocation', 'http://18.204.203.159:8080/exist/apps/nyheritage/NYHeritage.xsd')
 	root.set('InstitutionID', data[0])
 # 2 InstitutionName
 	ET.SubElement(root, 'InstitutionName').text = data[2]

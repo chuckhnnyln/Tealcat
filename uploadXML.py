@@ -27,7 +27,7 @@ def putFile(file):
 
 	auth = base64.encodestring('%s:%s' % (nyhconfig.existAuth()['user'], nyhconfig.existAuth()['password'])).replace('\n', '')
 
-	con = httplib.HTTP('54.174.162.83:8080')
+	con = httplib.HTTP('18.204.203.159:8080')
 
 	con.putrequest('PUT', '%s/%s' % (collection, doc))
 	con.putheader('Content-Type', 'application/xml')

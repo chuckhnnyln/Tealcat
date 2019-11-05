@@ -1,9 +1,9 @@
 <?php
 
 $SavePath="/home/ubuntu/metadata-archiver/";
-$CollectionFeed = "http://54.174.162.83:8080/exist/apps/nyheritage/views/collection_list.xq";
-$OrganizationFeed = "http://54.174.162.83:8080/exist/apps/nyheritage/views/institution_list.xq";
-$CouncilFeed = "http://54.174.162.83:8080/exist/apps/nyheritage/views/council_list.xq";
+$CollectionFeed = "http://18.204.203.159:8080/exist/apps/nyheritage/views/collection_list.xq";
+$OrganizationFeed = "http://18.204.203.159:8080/exist/apps/nyheritage/views/institution_list.xq";
+$CouncilFeed = "http://18.204.203.159:8080/exist/apps/nyheritage/views/council_list.xq";
 date_default_timezone_set('UTC');
 $CurrentDate = date("Ymd-His");
 $Types = array("coll","inst","coun");
