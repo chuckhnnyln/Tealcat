@@ -10,8 +10,6 @@ echo Deleted previous output
 python $LOCALPATH/oaiharvest.py
 echo Finished OAI harvest
 
-exit 0 #chuck-stop
-
 echo Processing XML for collections
 $LOCALPATH/process_oai.sh
 

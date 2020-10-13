@@ -11,3 +11,4 @@ nyhconfig.*
 *.inc
 .DS_Store
 *.xml
+*.csv
