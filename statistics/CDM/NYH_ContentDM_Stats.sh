@@ -108,7 +108,7 @@ for org in "${ENRICH[@]}"
         hunt $prey
         prey="${prey#\"}"
         prey="${prey%\"*}"
-        echo -n .
+        echo -n "."
         echo $council","$orgid","$orgname",\""$prey"\","$outcome >> $1_CDM_combined.csv
     done
 done

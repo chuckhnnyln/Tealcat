@@ -88,7 +88,7 @@ for org in "${ENRICH[@]}"
     path=${path#\"}
     path=${path%\"*}
     outcome=`cat $1_DRUI_stats.csv | grep ^$path[,]`
-    echo -n .
+    echo -n "."
     if [[ $outcome != "" ]]
     then
       pageviews=`echo $outcome | cut -d "," -f 2`
