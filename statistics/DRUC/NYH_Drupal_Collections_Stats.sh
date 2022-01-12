@@ -11,7 +11,11 @@ showme () {
 }
 
 mv $2 $1_DRUC_raw.csv
-wget -O $1_DRUC_enrich.csv https://nyheritage.org/stats-enrich-DRUC
+wget -O $1_DRUC_enrich_raw.csv https://nyheritage.org/stats-enrich-DRUC
+
+#Remove header line from enrichment file
+cat $1_DRUC_enrich_raw.csv | tail -n +1 > $1_DRUC_enrich.csv
+rm $1_DRUC_enrich_raw.csv
 
 #Flotsam are lines we don't need...
 FLOTSAM='^collection_type|^field_alpha_sort|^nyh_topic|^time_period|^terms\|^\('

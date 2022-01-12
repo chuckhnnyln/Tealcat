@@ -14,7 +14,10 @@ showme () {
 }
 
 mv $2 $1_DRUI_raw.csv
-wget -O $1_DRUI_enrich.csv https://nyheritage.org/stats-enrich-DRUI
+wget -O $1_DRUI_enrich_raw.csv https://nyheritage.org/stats-enrich-DRUI
+
+cat $1_DRUI_enrich_raw.csv | tail -n +1 > $1_DRUI_enrich.csv
+rm $1_DRUI_enrich_raw.csv
 
 #Flotsam are lines we don't need...
 FLOTSAM='^collection_type|^field_alpha_sort|^nyh_topic|^time_period|^terms|^\('

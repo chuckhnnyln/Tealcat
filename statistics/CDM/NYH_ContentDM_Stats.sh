@@ -28,7 +28,10 @@ showme () {
 }
 
 mv $2 $1_CDM_raw.csv
-wget -O $1_CDM_enrich.csv https://nyheritage.org/stats-enrich-CDM
+wget -O $1_CDM_enrich_raw.csv https://nyheritage.org/stats-enrich-CDM
+
+cat $1_CDM_enrich_raw.csv | tail -n +1 > $1_CDM_enrich.csv
+rm $1_CDM_enrich_raw.csv
 
 #Flotsam are lines we don't need...
 FLOTSAM='^collection_type
